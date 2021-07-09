@@ -57,6 +57,7 @@ module GraphqlDevise
       prepared_resolvers.each do |action, resolver|
         query.field(action, resolver: resolver, authenticate: false)
         if !subscription.blank?
+          byebug
           subscription.field(action, resolver: resolver, authenticate: false)
         end
       end
