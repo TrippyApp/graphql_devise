@@ -6,7 +6,7 @@ module ActionDispatch::Routing
       clean_options = GraphqlDevise::ResourceLoader.new(resource, options, true).call(
         GraphqlDevise::Types::QueryType,
         GraphqlDevise::Types::MutationType,
-        nil
+        GraphqlDevise::Types::SubscriptionType
       )
 
       post clean_options.at, to: 'graphql_devise/graphql#auth'
