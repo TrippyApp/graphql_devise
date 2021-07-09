@@ -56,6 +56,9 @@ module GraphqlDevise
 
       prepared_resolvers.each do |action, resolver|
         query.field(action, resolver: resolver, authenticate: false)
+        if !subscription.blank?
+          subscription.field(action, resolver: resolver, authenticate: false)
+        end
       end
 
       GraphqlDevise.add_mapping(GraphqlDevise.to_mapping_name(@resource).to_sym, @resource)

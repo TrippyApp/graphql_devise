@@ -6,9 +6,10 @@ module GraphqlDevise
     INTROSPECTION_FIELDS = ['__schema', '__type', '__typename']
     DEFAULT_NOT_AUTHENTICATED = ->(field) { raise GraphqlDevise::AuthenticationError, "#{field} field requires authentication" }
 
-    def initialize(query: nil, mutation: nil, authenticate_default: true, public_introspection: !Rails.env.production?, resource_loaders: [], unauthenticated_proc: DEFAULT_NOT_AUTHENTICATED)
+    def initialize(query: nil, mutation: nil, subscription: nil, authenticate_default: true, public_introspection: !Rails.env.production?, resource_loaders: [], unauthenticated_proc: DEFAULT_NOT_AUTHENTICATED)
       @query                = query
       @mutation             = mutation
+      @subscription         = subscription
       @resource_loaders     = resource_loaders
       @authenticate_default = authenticate_default
       @public_introspection = public_introspection
@@ -123,7 +124,7 @@ module GraphqlDevise
       @resource_loaders.each do |resource_loader|
         raise Error, 'Invalid resource loader instance' unless resource_loader.instance_of?(GraphqlDevise::ResourceLoader)
 
-        resource_loader.call(@query, @mutation)
+        resource_loader.call(@query, @mutation, @subscription)
       end
     end
 
