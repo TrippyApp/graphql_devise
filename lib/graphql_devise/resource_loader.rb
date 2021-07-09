@@ -9,7 +9,7 @@ module GraphqlDevise
       @default_operations = GraphqlDevise::DefaultOperations::MUTATIONS.merge(GraphqlDevise::DefaultOperations::QUERIES)
     end
 
-    def call(query, mutation)
+    def call(query, mutation, subscription)
       # clean_options responds to all keys defined in GraphqlDevise::MountMethod::SUPPORTED_OPTIONS
       clean_options = GraphqlDevise::MountMethod::OptionSanitizer.new(@options).call!
 
